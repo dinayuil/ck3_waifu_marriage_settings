@@ -1,0 +1,23 @@
+﻿l_english:
+ rule_waifu_marriage_restriction:0 "Waifu Marriage Restriction"
+ rule_waifu_marriage_restriction_desc:0 "When enabled, characters satisfying waifu_portrait_trigger can only marry or betroth other 2D characters. Requires: Anime Core Lib."
+ setting_waifu_marriage_restriction_enabled:0 "Enabled"
+ setting_waifu_marriage_restriction_enabled_desc:0 "2D characters can only marry 2D characters (default)"
+ setting_waifu_marriage_restriction_disabled:0 "Disabled"
+ setting_waifu_marriage_restriction_disabled_desc:0 "No restriction, 2D characters can marry anyone"
+
+ rule_waifu_same_sex_marriage:0 "Waifu Same-Sex Marriage"
+ rule_waifu_same_sex_marriage_desc:0 "When enabled, 2D characters can marry same-gender 2D characters, ignoring faith doctrine and other mods' gender restrictions."
+ setting_waifu_same_sex_marriage_enabled:0 "Enabled"
+ setting_waifu_same_sex_marriage_enabled_desc:0 "Waifus can marry same-gender waifus (default)"
+ setting_waifu_same_sex_marriage_disabled:0 "Disabled"
+ setting_waifu_same_sex_marriage_disabled_desc:0 "Waifus still follow faith gender restrictions"
+
+ waifu_must_marry_waifu:0 "[SUBJECT.GetFirstName] is a 2D character and can only marry another 2D character"
+
+ rule_waifu_call_exemption:0 "Waifu Alliance Call Exemption"
+ rule_waifu_call_exemption_desc:0 "When enabled, refusing a 2D ally's call to war incurs no prestige loss or opinion penalty."
+ setting_waifu_call_exemption_enabled:0 "Enabled"
+ setting_waifu_call_exemption_enabled_desc:0 "No penalty for refusing a waifu's call to war (default)"
+ setting_waifu_call_exemption_disabled:0 "Disabled"
+ setting_waifu_call_exemption_disabled_desc:0 "Normal penalties apply when refusing waifu ally's call"

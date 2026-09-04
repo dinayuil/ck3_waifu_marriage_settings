@@ -1,0 +1,34 @@
+# 纸片人婚姻限制 / Waifu Marriage Restriction
+# 控制是否启用纸片人只能和纸片人结婚的限制
+# Controls whether 2D characters are restricted to only marrying other 2D characters
+
+waifu_marriage_restriction = {
+	categories = {
+		waifu
+	}
+	default = waifu_marriage_restriction_enabled
+	waifu_marriage_restriction_enabled = { }   # 默认启用 / Enabled by default
+	waifu_marriage_restriction_disabled = { }  # 可关闭 / Can be disabled
+}
+
+# 控制纸片人是否可以与同性别纸片人结婚（无视宗教教义和其他mod的性别限制）
+# Controls whether 2D characters can marry same-gender 2D characters (ignoring faith restrictions)
+waifu_same_sex_marriage = {
+	categories = {
+		waifu
+	}
+	default = waifu_same_sex_marriage_enabled
+	waifu_same_sex_marriage_enabled = { }    # 默认启用 / Enabled by default
+	waifu_same_sex_marriage_disabled = { }   # 可关闭 / Can be disabled
+}
+
+# 控制纸片人盟友召唤参战时拒绝是否豁免惩罚
+# Controls whether refusing a waifu ally's call to war is penalty-free
+waifu_call_exemption = {
+	categories = {
+		waifu
+	}
+	default = waifu_call_exemption_enabled
+	waifu_call_exemption_enabled = { }   # 默认启用 / Enabled by default
+	waifu_call_exemption_disabled = { }  # 可关闭 / Can be disabled
+}

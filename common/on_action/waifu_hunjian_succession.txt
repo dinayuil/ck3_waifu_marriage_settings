@@ -1,0 +1,77 @@
+# 纸片人婚姻限制 / Waifu Marriage Restriction
+# 玩家角色死亡时，将誓约关系（hunjian/shiyuezhe）和誓约纪念章（tidu_ring）自动转移给继承人
+# Transfer vow (hunjian/shiyuezhe) relationships AND tidu_ring trait to player heir on death.
+#
+# 依赖 Hunjian Common Lib（global_var:anime_core_loaded）及 WSG mod（tidu_ring 特质）
+# Requires Hunjian Common Lib (global_var:anime_core_loaded) and WSG mod (tidu_ring trait).
+#
+# 关系继承：使用 inheriting_hunjian_relationships_effects，转移时调用
+#   waifu.set_relation_shiyuezhe = 继承人，触发 on_set_relation_shiyuezhe 而非
+#   on_set_relation_hunjian，因此 tidu_ring 不会自动添加，需手动处理。
+# Relation inheritance uses set_relation_shiyuezhe path, which does NOT fire
+# on_set_relation_hunjian → tidu_ring is NOT auto-added → must be handled manually.
+
+on_death = {
+	on_actions = {
+		waifu_inherit_shiyue_on_player_death
+	}
+}
+
+waifu_inherit_shiyue_on_player_death = {
+	trigger = {
+		# 仅对玩家角色生效 / Player character only
+		is_ai = no
+		# 必须有继承人可以接手关系 / Must have an heir to receive relations
+		exists = player_heir
+		# Hunjian mod 必须已加载 / Hunjian mod must be loaded
+		exists = global_var:anime_core_loaded
+		# 必须拥有至少一个誓约关系 / Must have at least one vow relation
+		OR = {
+			num_of_relation_shiyuezhe > 0
+			num_of_relation_hunjian > 0
+		}
+	}
+	effect = {
+		# ── 1. 保存继承所需的命名作用域和誓约数量 ─────────────────────────────
+		# Save scopes and vow count needed for inheritance
+		save_scope_as = dead
+		player_heir = {
+			save_scope_as = invited_character
+		}
+		# 保存当前誓约数量（转移后 num_of_relation_hunjian 会变为 0）
+		# Save current vow count (after transfer it drops to 0 on the dead char)
+		save_scope_value_as = {
+			name = waifu_mod_vow_count
+			value = num_of_relation_hunjian
+		}
+
+		# ── 2. 转移誓约关系 ───────────────────────────────────────────────────
+		# Transfer vow relations using Hunjian mod's existing effect
+		inheriting_hunjian_relationships_effects = yes
+
+		# ── 3. 转移 tidu_ring（誓约纪念章）特质 ──────────────────────────────
+		# Transfer tidu_ring trait (from WSG mod 2224124758)
+		# 条件：死亡角色有 tidu_ring（即 WSG mod 已加载）且有誓约要继承
+		# Condition: dead char had tidu_ring (WSG mod loaded) and had vows to inherit
+		if = {
+			limit = {
+				has_trait = tidu_ring
+				scope:waifu_mod_vow_count > 0
+			}
+			scope:invited_character = {
+				# 如果继承人尚未有此特质，先添加
+				# Add trait if heir doesn't have it yet
+				if = {
+					limit = { NOT = { has_trait = tidu_ring } }
+					add_trait = tidu_ring
+				}
+				# 添加与继承誓约数量相等的 XP
+				# Add XP equal to number of inherited vow relations
+				add_trait_xp = {
+					trait = tidu_ring
+					value = scope:waifu_mod_vow_count
+				}
+			}
+		}
+	}
+}

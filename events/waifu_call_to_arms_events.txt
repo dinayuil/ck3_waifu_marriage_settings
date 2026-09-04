@@ -1,0 +1,134 @@
+# 纸片人婚姻限制 / Waifu Marriage Restriction
+# 覆盖 call_ally.0101（纸片人召唤参战被拒绝的通知事件），在 immediate 块里撤销对玩家的惩罚
+# Override call_ally.0101 to undo penalties when the waifu caller is a 2D character.
+#
+# 作用域（Scopes）：
+#   root = scope:actor = 召唤者（纸片人）
+#   scope:recipient = 玩家（拒绝者）
+#
+# 此事件由以下 on_decline 触发：
+#   - call_ally_interaction（联姻盟约，有名声惩罚）
+#   - call_house_member_to_war_interaction（家族召唤，无名声惩罚）
+#   - call_dynasty_member_to_war_interaction（王朝召唤，无名声惩罚）
+#
+# 游戏规则：waifu_call_exemption（默认启用）
+# 前置：Anime Core Lib（global_var:anime_core_loaded）
+
+namespace = call_ally
+
+# 覆盖原版 "Call to War Response: Refused" 事件
+# Original: game/events/interaction_events/alliance_interaction_events.txt
+call_ally.0101 = {
+	type = letter_event
+	opening = {
+		desc = call_ally.0100.opening
+	}
+	desc = call_ally.0101.desc
+	sender = {
+		character = scope:recipient
+		animation = dismissal
+	}
+
+	immediate = {
+		# ── 原版内容：保留工具提示显示 ────────────────────────────────────────
+		# Vanilla content: preserve tooltip display
+		show_as_tooltip = {
+			if = {
+				limit = {
+					exists = scope:call_dynasty_member_to_war_interaction
+				}
+				scope:actor.dynasty = {
+					add_dynasty_prestige = medium_dynasty_prestige_loss
+				}
+			}
+			# If we're a clan this interaction affects unity - Let's show that in the tooltip
+			refuse_call_to_arms_add_clan_unity_effect = yes
+		}
+
+		# ── 纸片人豁免：撤销对玩家的惩罚 ─────────────────────────────────────
+		# Waifu exemption: undo penalties applied against the player
+		# Condition: caller (root = scope:actor) is a waifu, game rule enabled, Anime Core Lib loaded
+		if = {
+			limit = {
+				exists = global_var:anime_core_loaded
+				has_game_rule = waifu_call_exemption_enabled
+				waifu_portrait_trigger = yes   # root = 纸片人召唤者 / 2D caller
+				exists = scope:recipient
+			}
+			# 撤销进攻战惩罚 / Undo offensive war penalties
+			# on_decline added: scope:actor.add_opinion(rejected_call_to_offensive_war → scope:recipient)
+			# on_decline added: scope:recipient.add_prestige_experience = major_prestige_loss (-350)
+			if = {
+				limit = {
+					has_opinion_modifier = {
+						modifier = rejected_call_to_offensive_war
+						target = scope:recipient
+					}
+				}
+				remove_opinion = {
+					modifier = rejected_call_to_offensive_war
+					target = scope:recipient
+				}
+				scope:recipient = {
+					if = {
+						limit = { NOT = { government_has_flag = government_is_mandala } }
+						add_prestige_experience = major_prestige_value  # 退还 350 / Refund 350
+					}
+				}
+			}
+			# 撤销防御战惩罚 / Undo defensive war penalties
+			# on_decline added: scope:actor.add_opinion(rejected_call_to_defensive_war → scope:recipient)
+			# on_decline added: scope:recipient.add_prestige_experience = massive_prestige_loss (-750)
+			if = {
+				limit = {
+					has_opinion_modifier = {
+						modifier = rejected_call_to_defensive_war
+						target = scope:recipient
+					}
+				}
+				remove_opinion = {
+					modifier = rejected_call_to_defensive_war
+					target = scope:recipient
+				}
+				scope:recipient = {
+					if = {
+						limit = { government_has_flag = government_is_mandala }
+						add_prestige_experience = major_prestige_value  # Mandala: 退还 350 / Refund 350
+						add_piety_level = 1                             # Mandala: 退还虔诚等级 / Refund piety level
+					}
+					else = {
+						add_prestige_experience = massive_prestige_value  # 退还 750 / Refund 750
+					}
+				}
+			}
+			# 撤销家族关系损伤 / Undo house relation damage
+			# on_decline applied: change_house_relation_effect VALUE = house_relation_damage_medium_value (-0.2)
+			# 条件与原版相同；hidden_effect 防止产生额外的"关系改善"通知
+			# TITLE 参数省略（?= 使其可选，scope:dummy_gender 在事件中不保证存在）
+			scope:recipient = {
+				if = {
+					limit = {
+						exists = house
+						is_house_head = yes
+						exists = scope:actor.house
+					}
+					hidden_effect = {
+						house = {
+							change_house_relation_effect = {
+								HOUSE = scope:actor.house
+								VALUE = house_relation_improve_medium_value  # +0.2 undoes -0.2
+								REASON = ally_call_ignored
+								CHAR = scope:recipient
+								TARGET_CHAR = scope:actor
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = call_ally.0101.a
+	}
+}
