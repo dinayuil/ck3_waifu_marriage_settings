@@ -1,10 +1,10 @@
 ﻿l_english:
- rule_waifu_marriage_restriction:0 "Waifu Marriage Restriction"
- rule_waifu_marriage_restriction_desc:0 "When enabled, characters satisfying waifu_portrait_trigger can only marry or betroth other 2D characters. Requires: Anime Core Lib."
- setting_waifu_marriage_restriction_enabled:0 "Enabled"
- setting_waifu_marriage_restriction_enabled_desc:0 "2D characters can only marry 2D characters (default)"
- setting_waifu_marriage_restriction_disabled:0 "Disabled"
- setting_waifu_marriage_restriction_disabled_desc:0 "No restriction, 2D characters can marry anyone"
+ rule_waifu_marriage_settings:0 "Waifu Marriage Settings"
+ rule_waifu_marriage_settings_desc:0 "When enabled, characters satisfying waifu_portrait_trigger can only marry or betroth other 2D characters. Requires: Anime Core Lib."
+ setting_waifu_marriage_settings_enabled:0 "Enabled"
+ setting_waifu_marriage_settings_enabled_desc:0 "2D characters can only marry 2D characters (default)"
+ setting_waifu_marriage_settings_disabled:0 "Disabled"
+ setting_waifu_marriage_settings_disabled_desc:0 "No restriction, 2D characters can marry anyone"
 
  rule_waifu_same_sex_marriage:0 "Waifu Same-Sex Marriage"
  rule_waifu_same_sex_marriage_desc:0 "When enabled, 2D characters can marry same-gender 2D characters, ignoring faith doctrine and other mods' gender restrictions."

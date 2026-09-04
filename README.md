@@ -1,4 +1,4 @@
-# 纸片人婚姻限制 / Waifu Marriage Restriction
+# 纸片人婚姻设置 / Waifu Marriage Settings
 
 CK3 mod，为纸片人角色定制婚姻行为，并兼容婚舰通用库的誓约系统。
 
@@ -12,7 +12,7 @@ CK3 mod，为纸片人角色定制婚姻行为，并兼容婚舰通用库的誓�
 
 ## 功能
 
-### 1. 纸片人婚姻限制（游戏规则，默认开启）
+### 1. 纸片人婚姻设置（游戏规则，默认开启）
 满足 `waifu_portrait_trigger` 的纸片人角色**只能**与同为纸片人的角色结婚或订婚，非纸片人角色无法与其结婚。可在游戏规则中关闭。
 
 ### 2. 纸片人同性婚姻（游戏规则，默认开启）
@@ -40,7 +40,7 @@ localization/
 
 ## 技术说明
 
-- 覆盖 `marriage_interaction_valid_target_trigger`：添加纸片人婚姻限制检查
+- 覆盖 `marriage_interaction_valid_target_trigger`：添加纸片人婚姻设置检查
 - 覆盖 `allowed_to_marry_same_sex_trigger`：为纸片人豁免信仰同性婚姻限制，阻止 AI 发起离婚
 - 新增 `waifu_same_sex_can_marry_trigger` / `waifu_same_sex_could_marry_trigger`：专供同性纸片人婚姻使用的触发器
 - 新增 `on_death` 钩子：转移誓约关系及纪念章特质

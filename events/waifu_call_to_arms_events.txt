@@ -1,4 +1,4 @@
-# 纸片人婚姻限制 / Waifu Marriage Restriction
+# 纸片人婚姻设置 / Waifu Marriage Settings
 # 覆盖 call_ally.0101（纸片人召唤参战被拒绝的通知事件），在 immediate 块里撤销对玩家的惩罚
 # Override call_ally.0101 to undo penalties when the waifu caller is a 2D character.
 #

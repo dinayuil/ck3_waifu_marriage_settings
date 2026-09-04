@@ -1,14 +1,14 @@
-# 纸片人婚姻限制 / Waifu Marriage Restriction
-# 控制是否启用纸片人只能和纸片人结婚的限制
+# 纸片人婚姻设置 / Waifu Marriage Settings
+# 控制是否启用纸片人只能和纸片人结婚的设置
 # Controls whether 2D characters are restricted to only marrying other 2D characters
 
-waifu_marriage_restriction = {
+waifu_marriage_settings = {
 	categories = {
 		waifu
 	}
-	default = waifu_marriage_restriction_enabled
-	waifu_marriage_restriction_enabled = { }   # 默认启用 / Enabled by default
-	waifu_marriage_restriction_disabled = { }  # 可关闭 / Can be disabled
+	default = waifu_marriage_settings_enabled
+	waifu_marriage_settings_enabled = { }   # 默认启用 / Enabled by default
+	waifu_marriage_settings_disabled = { }  # 可关闭 / Can be disabled
 }
 
 # 控制纸片人是否可以与同性别纸片人结婚（无视宗教教义和其他mod的性别限制）

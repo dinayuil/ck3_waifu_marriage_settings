@@ -1,4 +1,4 @@
-# 纸片人婚姻限制 / Waifu Marriage Restriction
+# 纸片人婚姻设置 / Waifu Marriage Settings
 # 覆盖原版 marriage_interaction_valid_target_trigger，加入：
 #   1. 纸片人只能和纸片人结婚的检查
 #   2. 同性纸片人对绕过性别限制
@@ -9,13 +9,13 @@
 marriage_interaction_valid_target_trigger = {
 
 	# ══════════════════════════════════════════════════════════════════
-	# 1. 纸片人婚姻限制：纸片人只能和纸片人结婚
+	# 1. 纸片人婚姻设置：纸片人只能和纸片人结婚
 	# Waifu-only restriction: waifus can only marry other waifus
 	# ══════════════════════════════════════════════════════════════════
 	trigger_if = {
 		limit = {
 			exists = global_var:anime_core_loaded
-			has_game_rule = waifu_marriage_restriction_enabled
+			has_game_rule = waifu_marriage_settings_enabled
 			OR = {
 				scope:secondary_actor     = { waifu_portrait_trigger = yes }
 				scope:secondary_recipient = { waifu_portrait_trigger = yes }

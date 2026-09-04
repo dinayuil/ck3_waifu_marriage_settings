@@ -1,4 +1,4 @@
-# 纸片人婚姻限制 / Waifu Marriage Restriction
+# 纸片人婚姻设置 / Waifu Marriage Settings
 # 玩家角色死亡时，将誓约关系（hunjian/shiyuezhe）和誓约纪念章（tidu_ring）自动转移给继承人
 # Transfer vow (hunjian/shiyuezhe) relationships AND tidu_ring trait to player heir on death.
 #
