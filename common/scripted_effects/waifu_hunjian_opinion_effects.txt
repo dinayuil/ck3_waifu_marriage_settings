@@ -1,25 +1,28 @@
 # 在当前角色 与 $TARGET$ 之间加一笔“互惠”好感（双向）
+# add_opinion 是 CK3 标准效果：modifier + target + opinion（数值）
 waifu_add_hunjian_opinion_effect = {
-	add_opinion_modifier = {
+	add_opinion = {
 		modifier = waifu_hunjian_sibling_opinion
 		target = $TARGET$
+		opinion = 100
 	}
 	$TARGET$ = {
-		add_opinion_modifier = {
+		add_opinion = {
 			modifier = waifu_hunjian_sibling_opinion
 			target = prev
+			opinion = 100
 		}
 	}
 }
 
 # 移除当前角色 与 $TARGET$ 之间的互惠好感
 waifu_remove_hunjian_opinion_effect = {
-	remove_opinion_modifier = {
+	remove_opinion = {
 		modifier = waifu_hunjian_sibling_opinion
 		target = $TARGET$
 	}
 	$TARGET$ = {
-		remove_opinion_modifier = {
+		remove_opinion = {
 			modifier = waifu_hunjian_sibling_opinion
 			target = prev
 		}

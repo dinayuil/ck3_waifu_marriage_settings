@@ -24,12 +24,17 @@ waifu_connect_hunjian_opinion = {
 	}
 	effect = {
 		# 新加入的婚舰：与主人的所有其他婚舰互加好感
-		every_relation = {
-			type = hunjian
+		if = {
 			limit = {
-				NOT = { this = scope:target }
+				exists = scope:target
 			}
-			waifu_add_hunjian_opinion_effect = { TARGET = scope:target }
+			every_relation = {
+				type = hunjian
+				limit = {
+					NOT = { this = scope:target }
+				}
+				waifu_add_hunjian_opinion_effect = { TARGET = scope:target }
+			}
 		}
 	}
 }
@@ -40,12 +45,17 @@ waifu_disconnect_hunjian_opinion = {
 	}
 	effect = {
 		# 离开的婚舰：清理其与剩余婚舰之间的好感
-		every_relation = {
-			type = hunjian
+		if = {
 			limit = {
-				NOT = { this = scope:target }
+				exists = scope:target
 			}
-			waifu_remove_hunjian_opinion_effect = { TARGET = scope:target }
+			every_relation = {
+				type = hunjian
+				limit = {
+					NOT = { this = scope:target }
+				}
+				waifu_remove_hunjian_opinion_effect = { TARGET = scope:target }
+			}
 		}
 	}
 }
