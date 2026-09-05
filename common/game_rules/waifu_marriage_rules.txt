@@ -32,3 +32,14 @@ waifu_call_exemption = {
 	waifu_call_exemption_enabled = { }   # 默认启用 / Enabled by default
 	waifu_call_exemption_disabled = { }  # 可关闭 / Can be disabled
 }
+
+# 控制婚舰之间是否互相有大量好感加成
+# Controls whether a player's warship (hunjian) characters get a large mutual opinion bonus
+waifu_hunjian_sibling_opinion = {
+	categories = {
+		waifu
+	}
+	default = waifu_hunjian_sibling_opinion_enabled
+	waifu_hunjian_sibling_opinion_enabled = { }    # 默认启用 / Enabled by default
+	waifu_hunjian_sibling_opinion_disabled = { }   # 可关闭 / Can be disabled
+}

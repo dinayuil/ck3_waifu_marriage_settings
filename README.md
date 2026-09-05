@@ -24,13 +24,18 @@ CK3 mod，为纸片人角色定制婚姻行为，并兼容婚舰通用库的誓�
 ### 4. 拒绝纸片人参战召唤豁免（游戏规则，默认开启）
 当纸片人盟友发起战争并召唤玩家参与时，**玩家拒绝不会受到任何惩罚**（无名声损失、无负面好感修正）。可在游戏规则中关闭。
 
+### 5. 婚舰姊妹好感（游戏规则，默认开启）
+同一玩家的所有「婚舰」（hunjian）角色之间获得**大量好感加成（+100）**，显著降低婚舰互相谋害、结仇或决斗的概率。可在游戏规则中关闭。
+
 ## 文件结构
 
 ```
 common/
   game_rules/              游戏规则定义
   scripted_triggers/       覆盖婚姻相关触发器（同性婚姻判定）
-  on_action/               玩家死亡时的誓约继承钩子
+  scripted_effects/        婚舰互惠好感相关脚本效果
+  opinion_modifiers/       婚舰姊妹好感修正
+  on_action/               玩家死亡时的誓约继承钩子，以及婚舰好感维护钩子
 events/
   waifu_call_to_arms_events.txt   覆盖 call_ally.0101，实现拒绝参战豁免
 localization/
@@ -45,6 +50,7 @@ localization/
 - 新增 `waifu_same_sex_can_marry_trigger` / `waifu_same_sex_could_marry_trigger`：专供同性纸片人婚姻使用的触发器
 - 新增 `on_death` 钩子：转移誓约关系及纪念章特质
 - 覆盖 `call_ally.0101` 事件：拒绝纸片人参战召唤后，撤销名声损失和好感修正
+- 新增 `waifu_hunjian_sibling_opinion` 规则 + `on_set_relation_hunjian` / `on_remove_relation_hunjian` 钩子：婚舰之间互加/清理好感修正
 
 ## 兼容性
 

@@ -1,0 +1,51 @@
+# 纸片人婚舰互惠好感 —— 在婚舰关系建立/移除时维护（带规则开关）
+# Extends the Hunjian lib's relation on-actions via the additive on_actions list.
+#
+# 作用域（Scopes）：
+#   root = 主人（hunjian 关系持有者/发起方）
+#   scope:target = 目标婚舰
+#
+# 游戏规则：waifu_hunjian_sibling_opinion（默认启用）
+
+on_set_relation_hunjian = {
+	on_actions = {
+		waifu_connect_hunjian_opinion
+	}
+}
+on_remove_relation_hunjian = {
+	on_actions = {
+		waifu_disconnect_hunjian_opinion
+	}
+}
+
+waifu_connect_hunjian_opinion = {
+	trigger = {
+		has_game_rule = waifu_hunjian_sibling_opinion_enabled
+	}
+	effect = {
+		# 新加入的婚舰：与主人的所有其他婚舰互加好感
+		every_relation = {
+			type = hunjian
+			limit = {
+				NOT = { this = scope:target }
+			}
+			waifu_add_hunjian_opinion_effect = { TARGET = scope:target }
+		}
+	}
+}
+
+waifu_disconnect_hunjian_opinion = {
+	trigger = {
+		has_game_rule = waifu_hunjian_sibling_opinion_enabled
+	}
+	effect = {
+		# 离开的婚舰：清理其与剩余婚舰之间的好感
+		every_relation = {
+			type = hunjian
+			limit = {
+				NOT = { this = scope:target }
+			}
+			waifu_remove_hunjian_opinion_effect = { TARGET = scope:target }
+		}
+	}
+}

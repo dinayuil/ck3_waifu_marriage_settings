@@ -21,3 +21,11 @@
  setting_waifu_call_exemption_enabled_desc:0 "拒绝纸片人召唤无惩罚（默认）"
  setting_waifu_call_exemption_disabled:0 "禁用"
  setting_waifu_call_exemption_disabled_desc:0 "拒绝纸片人召唤仍按正常规则受罚"
+
+ rule_waifu_hunjian_sibling_opinion:0 "婚舰姊妹好感"
+ rule_waifu_hunjian_sibling_opinion_desc:0 "启用后，玩家的“婚舰”（hunjian）角色之间将获得大量好感加成，大大降低互相伤害的概率。"
+ setting_waifu_hunjian_sibling_opinion_enabled:0 "启用"
+ setting_waifu_hunjian_sibling_opinion_enabled_desc:0 "同一主人的婚舰之间获得大量好感加成（默认）"
+ setting_waifu_hunjian_sibling_opinion_disabled:0 "禁用"
+ setting_waifu_hunjian_sibling_opinion_disabled_desc:0 "婚舰之间无好感加成"
+ waifu_hunjian_sibling_opinion_desc:0 "[Character.GetFirstName] 视 [Target.GetFirstName] 为挚爱的战友。"

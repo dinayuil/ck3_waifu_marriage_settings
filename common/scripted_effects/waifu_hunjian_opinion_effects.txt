@@ -1,0 +1,27 @@
+# 在当前角色 与 $TARGET$ 之间加一笔“互惠”好感（双向）
+waifu_add_hunjian_opinion_effect = {
+	add_opinion_modifier = {
+		modifier = waifu_hunjian_sibling_opinion
+		target = $TARGET$
+	}
+	$TARGET$ = {
+		add_opinion_modifier = {
+			modifier = waifu_hunjian_sibling_opinion
+			target = prev
+		}
+	}
+}
+
+# 移除当前角色 与 $TARGET$ 之间的互惠好感
+waifu_remove_hunjian_opinion_effect = {
+	remove_opinion_modifier = {
+		modifier = waifu_hunjian_sibling_opinion
+		target = $TARGET$
+	}
+	$TARGET$ = {
+		remove_opinion_modifier = {
+			modifier = waifu_hunjian_sibling_opinion
+			target = prev
+		}
+	}
+}
