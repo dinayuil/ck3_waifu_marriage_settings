@@ -14,17 +14,3 @@ waifu_add_hunjian_opinion_effect = {
 		}
 	}
 }
-
-# 移除当前角色 与 $TARGET$ 之间的互惠好感
-waifu_remove_hunjian_opinion_effect = {
-	remove_opinion = {
-		modifier = waifu_hunjian_sibling_opinion
-		target = $TARGET$
-	}
-	$TARGET$ = {
-		remove_opinion = {
-			modifier = waifu_hunjian_sibling_opinion
-			target = prev
-		}
-	}
-}

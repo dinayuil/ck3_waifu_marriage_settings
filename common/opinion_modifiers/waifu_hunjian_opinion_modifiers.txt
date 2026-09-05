@@ -1,6 +1,6 @@
 # 玩家的“婚舰”彼此之间的好感加成
 # Large opinion bonus between a player's warship (hunjian) characters
+# 显示名使用修饰符自身的本地化键（CK3 opinion modifier 以名称为本地化键）
 waifu_hunjian_sibling_opinion = {
 	opinion = 100
-	desc = waifu_hunjian_sibling_opinion_desc
 }

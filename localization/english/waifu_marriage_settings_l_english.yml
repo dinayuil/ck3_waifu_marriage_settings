@@ -28,4 +28,4 @@
  setting_waifu_hunjian_sibling_opinion_enabled_desc:0 "Warships of the same owner gain a large mutual opinion bonus (default)"
  setting_waifu_hunjian_sibling_opinion_disabled:0 "Disabled"
  setting_waifu_hunjian_sibling_opinion_disabled_desc:0 "No opinion bonus between warships"
- waifu_hunjian_sibling_opinion_desc:0 "[Character.GetFirstName] considers [Target.GetFirstName] a beloved sister-in-arms."
+ waifu_hunjian_sibling_opinion:0 "Beloved Sister-in-Arms"

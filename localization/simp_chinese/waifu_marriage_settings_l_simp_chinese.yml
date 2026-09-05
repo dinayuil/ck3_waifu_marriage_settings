@@ -28,4 +28,4 @@
  setting_waifu_hunjian_sibling_opinion_enabled_desc:0 "同一主人的婚舰之间获得大量好感加成（默认）"
  setting_waifu_hunjian_sibling_opinion_disabled:0 "禁用"
  setting_waifu_hunjian_sibling_opinion_disabled_desc:0 "婚舰之间无好感加成"
- waifu_hunjian_sibling_opinion_desc:0 "[Character.GetFirstName] 视 [Target.GetFirstName] 为挚爱的战友。"
+ waifu_hunjian_sibling_opinion:0 "挚爱的战友"

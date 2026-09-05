@@ -50,7 +50,7 @@ localization/
 - 新增 `waifu_same_sex_can_marry_trigger` / `waifu_same_sex_could_marry_trigger`：专供同性纸片人婚姻使用的触发器
 - 新增 `on_death` 钩子：转移誓约关系及纪念章特质
 - 覆盖 `call_ally.0101` 事件：拒绝纸片人参战召唤后，撤销名声损失和好感修正
-- 新增 `waifu_hunjian_sibling_opinion` 规则 + `on_set_relation_hunjian` / `on_remove_relation_hunjian` 钩子：婚舰之间互加/清理好感修正
+- 新增 `waifu_hunjian_sibling_opinion` 规则 + `on_set_relation_hunjian` 钩子：婚舰之间互加好感修正
 
 ## 兼容性
 
