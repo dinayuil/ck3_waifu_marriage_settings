@@ -1,0 +1,28 @@
+# 拓宽“可誓约”范围 —— 覆盖婚舰通用库的 can_be_oath_by_ACTOR_shown
+#
+# 原版（common/scripted_triggers/shiyue_triggers.txt）：
+#   can_be_oath_by_ACTOR_shown = {
+#       hunjian_enough_age = yes
+#       OR = {
+#           is_courtier_of = $ACTOR$
+#           is_pool_guest_of = $ACTOR$
+#           liege = $ACTOR$
+#       }
+#       NOT = { has_trait_with_flag = oathed }
+#   }
+#
+# 这里在原有“廷臣/宾客/封臣”基础上追加：只要满足 can_be_oath_by_ACTOR
+# （好感≥80 或 符合特定舰种资质）且未被他人誓约，即可被玩家誓约。
+# 这样封臣、以及“自己也是主人（有自己的婚舰）”的纸片人也能被誓约。
+
+can_be_oath_by_ACTOR_shown = {
+	hunjian_enough_age = yes
+	OR = {
+		is_courtier_of = $ACTOR$
+		is_pool_guest_of = $ACTOR$
+		liege = $ACTOR$
+		# 新增：好感达到 / 特定舰种符合即可，不再受主从关系限制
+		can_be_oath_by_ACTOR = { ACTOR = $ACTOR$ }
+	}
+	NOT = { has_trait_with_flag = oathed }
+}

@@ -30,14 +30,19 @@ CK3 mod，为纸片人角色定制婚姻行为，并兼容婚舰通用库的誓�
 ### 6. 婚舰主人好感（游戏规则，默认开启）
 婚舰与其主人之间获得**大量互惠好感加成（+100）**，方向对称；玩家死亡、继承人接管后也会自动补上，避免继承后好感丢失。可在游戏规则中关闭。
 
+### 7. 拓宽集体誓约范围
+集体誓约不再只限玩家的**廷臣/宾客**，而是覆盖全世界**所有符合条件的在世纸片人**（好感达标/特定舰种、未被他人誓约），包括玩家的**封臣**以及**自己也是主人（有自己的婚舰）**的纸片人。「统计可誓约数量」的面板/列表和集体誓约决策都一并拓展。
+
 ## 文件结构
 
 ```
 common/
   game_rules/              游戏规则定义
-  scripted_triggers/       覆盖婚姻相关触发器（同性婚姻判定）
+  scripted_triggers/       覆盖婚姻相关触发器（同性婚姻判定、可誓约范围）
   scripted_effects/        婚舰互惠好感相关脚本效果
   opinion_modifiers/       婚舰姊妹好感修正
+  script_values/           覆盖可誓约数量统计（含封臣、自为主人的纸片人）
+  decisions/               覆盖集体誓约决策（遍历全世界在世纸片人）
   on_action/               玩家死亡时的誓约继承钩子，以及婚舰好感维护钩子
 events/
   waifu_call_to_arms_events.txt   覆盖 call_ally.0101，实现拒绝参战豁免
@@ -53,6 +58,8 @@ localization/
 - 新增 `waifu_same_sex_can_marry_trigger` / `waifu_same_sex_could_marry_trigger`：专供同性纸片人婚姻使用的触发器
 - 新增 `on_death` 钩子：转移誓约关系及纪念章特质
 - 覆盖 `call_ally.0101` 事件：拒绝纸片人参战召唤后，撤销名声损失和好感修正
+- 覆盖 `can_be_oath_by_ACTOR_shown`：拓宽可誓约范围（含封臣、自为主人的纸片人）
+- 覆盖 `to_*_shiyue_interaction_number` 与 `group_wedding_decision`：统计和集体誓约都改为遍历全世界在世纸片人
 - 新增 `waifu_hunjian_sibling_opinion` 规则 + `on_set_relation_hunjian` 钩子：婚舰之间互加好感修正
 - 新增 `waifu_hunjian_master_opinion` 规则：主人与婚舰互加好感，并在继承时自动补上，避免好感丢失
 

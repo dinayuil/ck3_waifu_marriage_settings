@@ -1,0 +1,371 @@
+# 覆盖婚舰通用库的 group_wedding_decision（集体誓约）
+# 把原版里遍历“廷臣/宾客”（every_courtier_or_guest / any_courtier_or_guest）
+# 改为遍历“全世界在世角色”（every_living_character / any_living_character），
+# 使集体誓约能列出并直接誓约所有符合条件的纸片人（含封臣、自己也是主人的纸片人）。
+# 其余结构（图片、widget、cost、effect 逻辑）保持与原版一致。
+
+group_wedding_decision = { #集体誓约
+	picture = {
+		trigger = {
+			var:mishu ?= { warshipgirl_trigger = yes }
+		}
+		reference = "gfx/interface/illustrations/decisions/decision_group_wedding_wsg.dds"
+	}
+	picture = {
+		trigger = {
+			var:mishu ?= { is_kansen_trigger = yes }
+		}
+		reference = "gfx/interface/illustrations/decisions/decision_group_wedding_al.dds"
+	}
+	picture = {
+		trigger = {
+			var:mishu ?= { is_tactics_dolls_trigger = yes }
+		}
+		reference = "gfx/interface/illustrations/decisions/decision_group_wedding_gf.dds"
+	}
+	picture = {
+		trigger = {
+			var:mishu ?= { is_ba_student_trigger = yes }
+		}
+		reference = "gfx/interface/illustrations/decisions/decision_group_wedding_ba.dds"
+	}
+	picture = {
+		trigger = {
+			var:mishu ?= { is_uma_musume_trigger = yes }
+		}
+		# PID 102190506
+		reference = "gfx/interface/illustrations/decisions/decision_group_wedding_pd.dds"
+	}
+	picture = {
+		trigger = {
+			var:mishu ?= { nikke_portrait_trigger = yes }
+		}
+		reference = "gfx/interface/illustrations/decisions/decision_group_wedding_nikke.dds"
+	}
+	picture = {
+		reference = "gfx/interface/illustrations/event_scenes/suzumi_l2d.dds"
+	}
+	desc = group_wedding_decision_desc
+	decision_group_type = waifu
+	sort_order = 1990
+	is_shown = {
+		hunjian_enough_age = yes
+		OR = {
+			to_wsg_shiyue_interaction_number > 0
+			to_al_shiyue_interaction_number > 0
+			to_gf_shiyue_interaction_number > 0
+			to_ba_shiyue_interaction_number > 0
+			to_pd_shiyue_interaction_number > 0
+			to_nikke_shiyue_interaction_number > 0
+		}
+	}
+	widget = {
+		gui = "decision_view_widget_decision_option_list_controller"
+		controller = decision_option_list_controller
+		item = {
+			value = to_other_shiyue_interaction
+			localization = emptystring
+			is_shown = {
+				always = no
+			}
+			ai_chance = { value = 1 }
+		}
+		item = {
+			value = to_wsg_shiyue_interaction
+			localization = to_wsg_shiyue_interaction
+			is_shown = {
+				has_global_variable = hmi_character_loaded
+				any_living_character = {
+					warshipgirl_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				}
+			}
+			is_valid = {
+				any_living_character = {
+					warshipgirl_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+			}
+			ai_chance = { value = 1 }
+		}
+		item = {
+			value = to_al_shiyue_interaction
+			localization = to_al_shiyue_interaction
+			is_shown = {
+				has_global_variable = azur_lane_loaded
+				any_living_character = {
+					is_kansen_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				}
+			}
+			is_valid = {
+				any_living_character = {
+					is_kansen_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+			}
+			ai_chance = { value = 1 }
+		}
+		item = {
+			value = to_gf_shiyue_interaction
+			localization = to_gf_shiyue_interaction
+			is_shown = {
+				has_global_variable = girls_frontline_loaded
+				any_living_character = {
+					is_tactics_dolls_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				}
+			}
+			is_valid = {
+				any_living_character = {
+					is_tactics_dolls_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+			}
+			ai_chance = { value = 1 }
+		}
+		item = {
+			value = to_ba_shiyue_interaction
+			localization = to_ba_shiyue_interaction
+			is_shown = {
+				has_global_variable = blue_archive_loaded
+				any_living_character = {
+					is_ba_student_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				}
+			}
+			is_valid = {
+				any_living_character = {
+					is_ba_student_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+			}
+			ai_chance = { value = 1 }
+		}
+		item = {
+			value = to_pd_shiyue_interaction
+			localization = to_pd_shiyue_interaction
+			is_shown = {
+				has_global_variable = pretty_derby_loaded
+				any_living_character = {
+					is_uma_musume_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				}
+			}
+			is_valid = {
+				any_living_character = {
+					is_uma_musume_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+			}
+			ai_chance = { value = 1 }
+		}
+		item = {
+			value = to_nikke_shiyue_interaction
+			localization = to_nikke_shiyue_interaction
+			is_shown = {
+				has_global_variable = nikke_loaded
+				any_living_character = {
+					nikke_portrait_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				}
+			}
+			is_valid = {
+				any_living_character = {
+					nikke_portrait_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+			}
+			ai_chance = { value = 1 }
+		}
+	}
+
+	cost = {
+		gold = {
+			value = 0
+			add = {
+				value = shiyue_cost_value_base
+				add = {
+					value = num_of_relation_hunjian
+					add = {
+						value = mass_shiyue_count
+						divide = 2
+					}
+					multiply = highest_held_title_tier
+				}
+				max = shiyue_cost_value_max
+			}
+			multiply = mass_shiyue_count
+			min = 1
+			multiply = shiyue_cost_value_modifier
+		}
+	}
+
+	effect = {
+		save_scope_as = actor
+		if = {
+			limit = { scope:to_wsg_shiyue_interaction = yes }
+			hidden_effect = {
+				every_living_character = {
+					limit = {
+						warshipgirl_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
+					ROOT = {
+						add_to_variable_list = {
+							name = mass_character_list
+							target = prev
+						}
+						set_relation_hunjian = prev
+					}
+				}
+			}
+			if = {
+				limit  = {
+					variable_list_size = {
+						name = mass_character_list
+						value >= 2
+					}
+				}
+				trigger_event = {
+					id = HM.1316
+					delayed = yes
+				}
+			}
+			else  = {
+				random_in_list = {
+					variable = mass_character_list
+					save_scope_as = recipient
+				}
+				clear_variable_list = mass_character_list
+				trigger_event = {
+					id = HM.0003
+					delayed = yes
+				}
+			}
+		}
+		else_if = {
+			limit = { scope:to_al_shiyue_interaction= yes }
+			every_living_character = {
+				limit = {
+					is_kansen_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			set_variable = {
+				name = mass_character_list_gui
+				value = flag:al_group_wedding
+				days = 7
+			}
+			play_music_cue = view
+		}
+		else_if = {
+			limit = { scope:to_gf_shiyue_interaction = yes }
+			every_living_character = {
+				limit = {
+					is_tactics_dolls_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			set_variable = {
+				name = mass_character_list_gui
+				value = flag:gf_group_wedding
+				days = 7
+			}
+			play_music_cue = gf_oath
+		}
+		else_if = {
+			limit = { scope:to_ba_shiyue_interaction = yes }
+			every_living_character = {
+				limit = {
+					is_ba_student_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			set_variable = {
+				name = mass_character_list_gui
+				value = flag:ba_group_wedding
+				days = 7
+			}
+		}
+		else_if = {
+			limit = { scope:to_pd_shiyue_interaction = yes }
+			every_living_character = {
+				limit = {
+					is_uma_musume_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			set_variable = {
+				name = mass_character_list_gui
+				value = flag:pd_group_wedding
+				days = 7
+			}
+		}
+		else_if = {
+			limit = { scope:to_nikke_shiyue_interaction = yes }
+			every_living_character = {
+				limit = {
+					nikke_portrait_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			set_variable = {
+				name = mass_character_list_gui
+				value = flag:nikke_group_wedding
+				days = 7
+			}
+		}
+	}
+	ai_will_do = {
+		base = 0 #The AI should never do this!
+	}
+	ai_check_interval = 0
+}
