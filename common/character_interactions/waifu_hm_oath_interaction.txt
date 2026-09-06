@@ -1,0 +1,72 @@
+# 覆盖 HM/WSG mod 的 hm_set_second_oath_interaction（顶部圆圈点击后打开的“选择要誓约的纸片人”交互）
+#
+# 原版 populate_actor_list 用 every_courtier_or_guest + warshipgirl_trigger（只列廷臣里的战舰少女）。
+# 这里改为【玩家领地内的廷臣/宾客 + 封臣】（every_courtier_or_guest + every_vassal）+ waifu_portrait_trigger，
+# 使列表包含玩家领地内所有纸片人（含封臣、自为主人的），避免全图遍历卡顿。
+# desc 借用婚舰通用库的 set_shiyue_interaction_desc，避免依赖 HM 的本地化。
+# 注意：需要你的 mod 在【加载顺序】上位于 HM/WSG mod 之后，否则此覆盖不生效。
+
+hm_set_second_oath_interaction = {
+	category = interaction_category_friendly
+	common_interaction = yes
+	ai_frequency = 0
+	icon = shiyue
+	desc = set_shiyue_interaction_desc
+	needs_recipient_to_open = yes
+	populate_actor_list = {
+		scope:actor = {
+			every_courtier_or_guest = {
+				limit = {
+					waifu_portrait_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = scope:actor }
+					can_be_oath_by_ACTOR = { ACTOR = scope:actor }
+					NOT = { this = scope:actor }
+				}
+				add_to_list = characters
+			}
+			every_vassal = {
+				limit = {
+					waifu_portrait_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = scope:actor }
+					can_be_oath_by_ACTOR = { ACTOR = scope:actor }
+					NOT = { this = scope:actor }
+				}
+				add_to_list = characters
+			}
+		}
+	}
+	is_shown = {
+		scope:recipient = scope:actor
+		scope:actor = {
+			is_ai = no
+		}
+	}
+	has_valid_target_showing_failures_only = {
+		scope:actor = {
+			is_physically_able = yes
+			is_adult = yes
+			NOT = { has_pending_interaction_of_type = set_shiyue_interaction }
+		}
+		scope:secondary_actor = {
+			is_incapable = no
+		}
+	}
+	on_accept = {
+		clear_saved_scope = recipient
+		scope:secondary_actor = {
+			save_scope_as = recipient
+		}
+		scope:actor = {
+			set_relation_hunjian = scope:secondary_actor
+			trigger_event = {
+				on_action = on_set_relation_hunjian_explicit
+			}
+		}
+	}
+	cost = {
+		gold = {
+			value = shiyue_cost_value
+		}
+	}
+	auto_accept = yes
+}

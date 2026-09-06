@@ -1,0 +1,53 @@
+# 覆盖 HM/WSG mod 的 action_send_shiyue 顶部快捷动作（“誓约一位新的{}”圆圈提醒）
+#
+# 原版（common/important_actions/hm_base_important_actions.txt）用 any_courtier + warshipgirl_trigger，
+# 只统计玩家的【廷臣】里的【战舰少女】。这里改为【廷臣/宾客 或 封臣】（any_courtier_or_guest 或 any_vassal）
+# + waifu_portrait_trigger：
+#   - 覆盖所有纸片人类型（不只战舰少女）
+#   - 包含玩家的【封臣】、【自己也是主人（有自己的婚舰）】的纸片人
+# 点击后打开的交互也一并覆盖（见 common/character_interactions/），因此不依赖 HM 也能用。
+# 注意：需要你的 mod 在【加载顺序】上位于 HM/WSG mod 之后，否则此覆盖不生效。
+
+action_send_shiyue = {
+	type = alert
+	icon = action_send_shiyue
+	priority = 355
+	check_create_action = {
+		if = {
+			limit = {
+				is_adult = yes
+				OR = {
+					any_courtier_or_guest = {
+						waifu_portrait_trigger = yes
+						is_maid_portrait_trigger = no
+						can_be_oath_by_ACTOR_shown = { ACTOR = ROOT }
+						can_be_oath_by_ACTOR = { ACTOR = ROOT }
+						NOT = { this = ROOT }
+					}
+					any_vassal = {
+						waifu_portrait_trigger = yes
+						is_maid_portrait_trigger = no
+						can_be_oath_by_ACTOR_shown = { ACTOR = ROOT }
+						can_be_oath_by_ACTOR = { ACTOR = ROOT }
+						NOT = { this = ROOT }
+					}
+				}
+			}
+			try_create_important_action = {
+				important_action_type = action_send_shiyue
+				actor = root
+				recipient = root
+			}
+		}
+	}
+	unimportant = {
+		short_term_gold < 100
+	}
+	effect = {
+		open_interaction_window = {
+			interaction = hm_set_second_oath_interaction
+			actor = scope:actor
+			recipient = scope:recipient
+		}
+	}
+}
