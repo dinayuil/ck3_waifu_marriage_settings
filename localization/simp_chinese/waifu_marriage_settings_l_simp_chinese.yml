@@ -37,3 +37,6 @@
  setting_waifu_hunjian_master_opinion_disabled:0 "禁用"
  setting_waifu_hunjian_master_opinion_disabled_desc:0 "婚舰与主人之间无好感加成"
  waifu_hunjian_master_opinion:0 "挚爱之人"
+
+ to_other_shiyue_interaction:0 "向宫廷内的其他纸片人 ([SCOPE.ScriptValue('to_other_shiyue_interaction_number')]) 发出集体誓约的邀约"
+ to_other_shiyue_interaction_tooltip:0 "向宫廷内的其他纸片人发出集体[shiyue|E]的邀约，以同她们缔结誓约"

@@ -57,6 +57,7 @@ group_wedding_decision = { #集体誓约
 			to_ba_shiyue_interaction_number > 0
 			to_pd_shiyue_interaction_number > 0
 			to_nikke_shiyue_interaction_number > 0
+			to_other_shiyue_interaction_number > 0
 		}
 	}
 	widget = {
@@ -64,9 +65,32 @@ group_wedding_decision = { #集体誓约
 		controller = decision_option_list_controller
 		item = {
 			value = to_other_shiyue_interaction
-			localization = emptystring
+			localization = to_other_shiyue_interaction
 			is_shown = {
-				always = no
+				OR = {
+					any_courtier_or_guest = {
+						waifu_misc_pledgeable_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
+					any_vassal = {
+						waifu_misc_pledgeable_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
+				}
+			}
+			is_valid = {
+				OR = {
+					any_courtier_or_guest = {
+						waifu_misc_pledgeable_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
+					any_vassal = {
+						waifu_misc_pledgeable_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
+				}
 			}
 			ai_chance = { value = 1 }
 		}
@@ -522,6 +546,42 @@ group_wedding_decision = { #集体誓约
 			set_variable = {
 				name = mass_character_list_gui
 				value = flag:nikke_group_wedding
+				days = 7
+			}
+		}
+		else_if = {
+			limit = { scope:to_other_shiyue_interaction = yes }
+			every_courtier_or_guest = {
+				limit = {
+					waifu_misc_pledgeable_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			every_vassal = {
+				limit = {
+					waifu_misc_pledgeable_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			set_variable = {
+				name = mass_character_list_gui
+				value = flag:other_group_wedding
 				days = 7
 			}
 		}

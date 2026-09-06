@@ -37,3 +37,6 @@
  setting_waifu_hunjian_master_opinion_disabled:0 "Disabled"
  setting_waifu_hunjian_master_opinion_disabled_desc:0 "No opinion bonus between warship and owner"
  waifu_hunjian_master_opinion:0 "Beloved Partner"
+
+ to_other_shiyue_interaction:0 "Extend a collective oath invitation to other 2D characters ([SCOPE.ScriptValue('to_other_shiyue_interaction_number')])"
+ to_other_shiyue_interaction_tooltip:0 "Extend a collective [shiyue|E] oath invitation to other 2D characters to bind them"

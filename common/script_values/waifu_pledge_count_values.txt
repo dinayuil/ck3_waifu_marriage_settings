@@ -123,3 +123,24 @@ to_nikke_shiyue_interaction_number = {
 		add = 1
 	}
 }
+
+# “其他/杂项”可誓约纸片人（不属于上面 6 类，如绫地宁宁等彩蛋角色）
+to_other_shiyue_interaction_number = {
+	value = 0
+	every_courtier_or_guest = {
+		limit = {
+			waifu_misc_pledgeable_trigger = yes
+			can_be_oath_by_ACTOR_shown = { ACTOR = root }
+			can_be_oath_by_ACTOR = { ACTOR = root }
+		}
+		add = 1
+	}
+	every_vassal = {
+		limit = {
+			waifu_misc_pledgeable_trigger = yes
+			can_be_oath_by_ACTOR_shown = { ACTOR = root }
+			can_be_oath_by_ACTOR = { ACTOR = root }
+		}
+		add = 1
+	}
+}

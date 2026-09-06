@@ -26,3 +26,19 @@ can_be_oath_by_ACTOR_shown = {
 	}
 	NOT = { has_trait_with_flag = oathed }
 }
+
+# “其他/杂项”可誓约纸片人：满足 waifu_portrait_trigger，但不属于集体誓约那 6 个特定类型。
+# 用于收录彩蛋/杂项角色（如绫地宁宁），使其也能出现在集体誓约的“其他”选项里。
+waifu_misc_pledgeable_trigger = {
+	waifu_portrait_trigger = yes
+	NOT = {
+		OR = {
+			warshipgirl_trigger = yes
+			is_kansen_trigger = yes
+			is_tactics_dolls_trigger = yes
+			is_ba_student_trigger = yes
+			is_uma_musume_trigger = yes
+			nikke_portrait_trigger = yes
+		}
+	}
+}
