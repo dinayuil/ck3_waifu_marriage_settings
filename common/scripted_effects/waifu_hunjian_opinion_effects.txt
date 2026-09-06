@@ -1,5 +1,14 @@
-# 在当前角色 与 $TARGET$ 之间加一笔“互惠”好感（双向）
-# add_opinion 是 CK3 标准效果：modifier + target + opinion（数值）
+# 纸片人婚舰互惠好感 —— 脚本效果
+# 两个效果在【当前角色】与 $TARGET$（另一名角色）之间加一笔“互惠”好感（双向）。
+# 均由 common/on_action/waifu_hunjian_opinion_actions.txt 里的 on_action 调用。
+#
+# 对应关系：
+#   waifu_add_hunjian_opinion_effect           → 规则 waifu_hunjian_sibling_opinion（婚舰↔婚舰，默认启用）
+#   waifu_add_hunjian_master_opinion_effect    → 规则 waifu_hunjian_master_opinion（主人↔婚舰，默认启用）
+#
+# 注意：加/删好感用 CK3 标准效果 add_opinion（modifier + target + opinion 数值）。
+
+
 waifu_add_hunjian_opinion_effect = {
 	add_opinion = {
 		modifier = waifu_hunjian_sibling_opinion
@@ -9,6 +18,23 @@ waifu_add_hunjian_opinion_effect = {
 	$TARGET$ = {
 		add_opinion = {
 			modifier = waifu_hunjian_sibling_opinion
+			target = prev
+			opinion = 100
+		}
+	}
+}
+
+# 在【当前角色（主人/持有者）】与 $TARGET$（婚舰）之间加一笔“互惠”好感（双向）
+# 从 root（主人）作用域调用：waifu_add_hunjian_master_opinion_effect = { TARGET = scope:target }
+waifu_add_hunjian_master_opinion_effect = {
+	add_opinion = {
+		modifier = waifu_hunjian_master_opinion
+		target = $TARGET$
+		opinion = 100
+	}
+	$TARGET$ = {
+		add_opinion = {
+			modifier = waifu_hunjian_master_opinion
 			target = prev
 			opinion = 100
 		}

@@ -29,3 +29,11 @@
  setting_waifu_hunjian_sibling_opinion_disabled:0 "Disabled"
  setting_waifu_hunjian_sibling_opinion_disabled_desc:0 "No opinion bonus between warships"
  waifu_hunjian_sibling_opinion:0 "Beloved Sister-in-Arms"
+
+ rule_waifu_hunjian_master_opinion:0 "Waifu Master-Oath Opinion"
+ rule_waifu_hunjian_master_opinion_desc:0 "When enabled, a player's warship (hunjian) and its owner gain a large mutual opinion bonus."
+ setting_waifu_hunjian_master_opinion_enabled:0 "Enabled"
+ setting_waifu_hunjian_master_opinion_enabled_desc:0 "Warship and owner gain a large mutual opinion bonus (default)"
+ setting_waifu_hunjian_master_opinion_disabled:0 "Disabled"
+ setting_waifu_hunjian_master_opinion_disabled_desc:0 "No opinion bonus between warship and owner"
+ waifu_hunjian_master_opinion:0 "Beloved Partner"

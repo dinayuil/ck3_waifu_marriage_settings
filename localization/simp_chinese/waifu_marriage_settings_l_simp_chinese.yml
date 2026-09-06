@@ -29,3 +29,11 @@
  setting_waifu_hunjian_sibling_opinion_disabled:0 "禁用"
  setting_waifu_hunjian_sibling_opinion_disabled_desc:0 "婚舰之间无好感加成"
  waifu_hunjian_sibling_opinion:0 "挚爱的战友"
+
+ rule_waifu_hunjian_master_opinion:0 "婚舰主人好感"
+ rule_waifu_hunjian_master_opinion_desc:0 "启用后，婚舰（hunjian）与其主人之间将获得大量好感加成。"
+ setting_waifu_hunjian_master_opinion_enabled:0 "启用"
+ setting_waifu_hunjian_master_opinion_enabled_desc:0 "婚舰与其主人之间获得大量好感加成（默认）"
+ setting_waifu_hunjian_master_opinion_disabled:0 "禁用"
+ setting_waifu_hunjian_master_opinion_disabled_desc:0 "婚舰与主人之间无好感加成"
+ waifu_hunjian_master_opinion:0 "挚爱之人"

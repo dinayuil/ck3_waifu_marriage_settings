@@ -4,3 +4,9 @@
 waifu_hunjian_sibling_opinion = {
 	opinion = 100
 }
+
+# 主人 与 婚舰 之间的互惠好感加成
+# Mutual opinion bonus between a warship's owner/master and the ship
+waifu_hunjian_master_opinion = {
+	opinion = 100
+}

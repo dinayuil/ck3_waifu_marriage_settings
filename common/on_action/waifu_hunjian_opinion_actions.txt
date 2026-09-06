@@ -6,11 +6,14 @@
 #   root = 主人（hunjian 关系持有者/发起方）
 #   scope:target = 目标婚舰
 #
-# 游戏规则：waifu_hunjian_sibling_opinion（默认启用）
+# 游戏规则：
+#   waifu_hunjian_sibling_opinion（默认启用）—— 婚舰彼此互加好感
+#   waifu_hunjian_master_opinion（默认启用）—— 主人与婚舰互加好感
 
 on_set_relation_hunjian = {
 	on_actions = {
 		waifu_connect_hunjian_opinion
+		waifu_connect_hunjian_master_opinion
 	}
 }
 
@@ -30,6 +33,24 @@ waifu_connect_hunjian_opinion = {
 					NOT = { this = scope:target }
 				}
 				waifu_add_hunjian_opinion_effect = { TARGET = scope:target }
+			}
+		}
+	}
+}
+
+waifu_connect_hunjian_master_opinion = {
+	trigger = {
+		has_game_rule = waifu_hunjian_master_opinion_enabled
+	}
+	effect = {
+		# 主人（root）与新娘舰（scope:target）互加好感
+		# 继承时也会触发（婚舰→继承人），自动补上新主人与婚舰的好感
+		if = {
+			limit = {
+				exists = scope:target
+			}
+			root = {
+				waifu_add_hunjian_master_opinion_effect = { TARGET = scope:target }
 			}
 		}
 	}
