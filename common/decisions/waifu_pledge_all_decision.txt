@@ -1,8 +1,8 @@
 # 覆盖婚舰通用库的 group_wedding_decision（集体誓约）
 # 把原版里遍历“廷臣/宾客”（every_courtier_or_guest / any_courtier_or_guest）
-# 改为遍历“全世界在世角色”（every_living_character / any_living_character），
-# 使集体誓约能列出并直接誓约所有符合条件的纸片人（含封臣、自己也是主人的纸片人）。
-# 其余结构（图片、widget、cost、effect 逻辑）保持与原版一致。
+# 改为遍历【玩家领地内的廷臣/宾客 + 封臣】（every/any_courtier_or_guest + every/any_vassal），
+# 使集体誓约能列出并直接誓约玩家领地内所有符合条件的纸片人（含封臣、自己也是主人的纸片人），
+# 避免全图遍历造成卡顿。其余结构（图片、widget、cost、effect 逻辑）保持与原版一致。
 
 group_wedding_decision = { #集体誓约
 	picture = {
@@ -75,16 +75,29 @@ group_wedding_decision = { #集体誓约
 			localization = to_wsg_shiyue_interaction
 			is_shown = {
 				has_global_variable = hmi_character_loaded
-				any_living_character = {
-					warshipgirl_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						warshipgirl_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
+					any_vassal = {
+						warshipgirl_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
 				}
 			}
 			is_valid = {
-				any_living_character = {
-					warshipgirl_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
-					can_be_oath_by_ACTOR = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						warshipgirl_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
+					any_vassal = {
+						warshipgirl_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
 				}
 			}
 			ai_chance = { value = 1 }
@@ -94,16 +107,29 @@ group_wedding_decision = { #集体誓约
 			localization = to_al_shiyue_interaction
 			is_shown = {
 				has_global_variable = azur_lane_loaded
-				any_living_character = {
-					is_kansen_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						is_kansen_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
+					any_vassal = {
+						is_kansen_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
 				}
 			}
 			is_valid = {
-				any_living_character = {
-					is_kansen_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
-					can_be_oath_by_ACTOR = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						is_kansen_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
+					any_vassal = {
+						is_kansen_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
 				}
 			}
 			ai_chance = { value = 1 }
@@ -113,16 +139,29 @@ group_wedding_decision = { #集体誓约
 			localization = to_gf_shiyue_interaction
 			is_shown = {
 				has_global_variable = girls_frontline_loaded
-				any_living_character = {
-					is_tactics_dolls_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						is_tactics_dolls_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
+					any_vassal = {
+						is_tactics_dolls_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
 				}
 			}
 			is_valid = {
-				any_living_character = {
-					is_tactics_dolls_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
-					can_be_oath_by_ACTOR = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						is_tactics_dolls_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
+					any_vassal = {
+						is_tactics_dolls_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
 				}
 			}
 			ai_chance = { value = 1 }
@@ -132,16 +171,29 @@ group_wedding_decision = { #集体誓约
 			localization = to_ba_shiyue_interaction
 			is_shown = {
 				has_global_variable = blue_archive_loaded
-				any_living_character = {
-					is_ba_student_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						is_ba_student_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
+					any_vassal = {
+						is_ba_student_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
 				}
 			}
 			is_valid = {
-				any_living_character = {
-					is_ba_student_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
-					can_be_oath_by_ACTOR = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						is_ba_student_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
+					any_vassal = {
+						is_ba_student_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
 				}
 			}
 			ai_chance = { value = 1 }
@@ -151,16 +203,29 @@ group_wedding_decision = { #集体誓约
 			localization = to_pd_shiyue_interaction
 			is_shown = {
 				has_global_variable = pretty_derby_loaded
-				any_living_character = {
-					is_uma_musume_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						is_uma_musume_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
+					any_vassal = {
+						is_uma_musume_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
 				}
 			}
 			is_valid = {
-				any_living_character = {
-					is_uma_musume_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
-					can_be_oath_by_ACTOR = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						is_uma_musume_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
+					any_vassal = {
+						is_uma_musume_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
 				}
 			}
 			ai_chance = { value = 1 }
@@ -170,16 +235,29 @@ group_wedding_decision = { #集体誓约
 			localization = to_nikke_shiyue_interaction
 			is_shown = {
 				has_global_variable = nikke_loaded
-				any_living_character = {
-					nikke_portrait_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						nikke_portrait_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
+					any_vassal = {
+						nikke_portrait_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					}
 				}
 			}
 			is_valid = {
-				any_living_character = {
-					nikke_portrait_trigger = yes
-					can_be_oath_by_ACTOR_shown = { ACTOR = root }
-					can_be_oath_by_ACTOR = { ACTOR = root }
+				OR = {
+					any_courtier_or_guest = {
+						nikke_portrait_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
+					any_vassal = {
+						nikke_portrait_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
 				}
 			}
 			ai_chance = { value = 1 }
@@ -212,7 +290,21 @@ group_wedding_decision = { #集体誓约
 		if = {
 			limit = { scope:to_wsg_shiyue_interaction = yes }
 			hidden_effect = {
-				every_living_character = {
+				every_courtier_or_guest = {
+					limit = {
+						warshipgirl_trigger = yes
+						can_be_oath_by_ACTOR_shown = { ACTOR = root }
+						can_be_oath_by_ACTOR = { ACTOR = root }
+					}
+					ROOT = {
+						add_to_variable_list = {
+							name = mass_character_list
+							target = prev
+						}
+						set_relation_hunjian = prev
+					}
+				}
+				every_vassal = {
 					limit = {
 						warshipgirl_trigger = yes
 						can_be_oath_by_ACTOR_shown = { ACTOR = root }
@@ -253,7 +345,21 @@ group_wedding_decision = { #集体誓约
 		}
 		else_if = {
 			limit = { scope:to_al_shiyue_interaction= yes }
-			every_living_character = {
+			every_courtier_or_guest = {
+				limit = {
+					is_kansen_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			every_vassal = {
 				limit = {
 					is_kansen_trigger = yes
 					can_be_oath_by_ACTOR_shown = { ACTOR = root }
@@ -276,7 +382,21 @@ group_wedding_decision = { #集体誓约
 		}
 		else_if = {
 			limit = { scope:to_gf_shiyue_interaction = yes }
-			every_living_character = {
+			every_courtier_or_guest = {
+				limit = {
+					is_tactics_dolls_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			every_vassal = {
 				limit = {
 					is_tactics_dolls_trigger = yes
 					can_be_oath_by_ACTOR_shown = { ACTOR = root }
@@ -299,7 +419,21 @@ group_wedding_decision = { #集体誓约
 		}
 		else_if = {
 			limit = { scope:to_ba_shiyue_interaction = yes }
-			every_living_character = {
+			every_courtier_or_guest = {
+				limit = {
+					is_ba_student_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			every_vassal = {
 				limit = {
 					is_ba_student_trigger = yes
 					can_be_oath_by_ACTOR_shown = { ACTOR = root }
@@ -321,7 +455,21 @@ group_wedding_decision = { #集体誓约
 		}
 		else_if = {
 			limit = { scope:to_pd_shiyue_interaction = yes }
-			every_living_character = {
+			every_courtier_or_guest = {
+				limit = {
+					is_uma_musume_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			every_vassal = {
 				limit = {
 					is_uma_musume_trigger = yes
 					can_be_oath_by_ACTOR_shown = { ACTOR = root }
@@ -343,7 +491,21 @@ group_wedding_decision = { #集体誓约
 		}
 		else_if = {
 			limit = { scope:to_nikke_shiyue_interaction = yes }
-			every_living_character = {
+			every_courtier_or_guest = {
+				limit = {
+					nikke_portrait_trigger = yes
+					can_be_oath_by_ACTOR_shown = { ACTOR = root }
+					can_be_oath_by_ACTOR = { ACTOR = root }
+				}
+				ROOT = {
+					add_to_variable_list = {
+						name = mass_character_list
+						target = prev
+					}
+					set_relation_hunjian = prev
+				}
+			}
+			every_vassal = {
 				limit = {
 					nikke_portrait_trigger = yes
 					can_be_oath_by_ACTOR_shown = { ACTOR = root }

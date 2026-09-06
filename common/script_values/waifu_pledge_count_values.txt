@@ -1,12 +1,20 @@
 # 覆盖婚舰通用库的 to_*_shiyue_interaction_number 脚本值
 # 原版用 every_courtier_or_guest（只统计廷臣/宾客），导致封臣、自为主人的纸片人不被统计。
-# 这里改为统计全世界【在世】且符合条件的纸片人（every_living_character）。
-# 配合 common/scripted_triggers/waifu_pledge_expansion_triggers.txt 里的 can_be_oath_by_ACTOR_shown 覆盖，
-# 使“统计可誓约数量”的面板/列表也包含封臣和自己也是主人的纸片人。
+# 这里在【玩家领地内】统计：玩家的【廷臣/宾客】+【封臣】（every_courtier_or_guest + every_vassal），
+# 避免全图遍历造成卡顿，同时包含封臣、自己也是主人的纸片人。
+# 配合 common/scripted_triggers/waifu_pledge_expansion_triggers.txt 里的 can_be_oath_by_ACTOR_shown 覆盖。
 
 to_wsg_shiyue_interaction_number = {
 	value = 0
-	every_living_character = {
+	every_courtier_or_guest = {
+		limit = {
+			warshipgirl_trigger = yes
+			can_be_oath_by_ACTOR_shown = { ACTOR = root }
+			can_be_oath_by_ACTOR = { ACTOR = root }
+		}
+		add = 1
+	}
+	every_vassal = {
 		limit = {
 			warshipgirl_trigger = yes
 			can_be_oath_by_ACTOR_shown = { ACTOR = root }
@@ -18,7 +26,15 @@ to_wsg_shiyue_interaction_number = {
 
 to_al_shiyue_interaction_number = {
 	value = 0
-	every_living_character = {
+	every_courtier_or_guest = {
+		limit = {
+			is_kansen_trigger = yes
+			can_be_oath_by_ACTOR_shown = { ACTOR = root }
+			can_be_oath_by_ACTOR = { ACTOR = root }
+		}
+		add = 1
+	}
+	every_vassal = {
 		limit = {
 			is_kansen_trigger = yes
 			can_be_oath_by_ACTOR_shown = { ACTOR = root }
@@ -30,7 +46,15 @@ to_al_shiyue_interaction_number = {
 
 to_gf_shiyue_interaction_number = {
 	value = 0
-	every_living_character = {
+	every_courtier_or_guest = {
+		limit = {
+			is_tactics_dolls_trigger = yes
+			can_be_oath_by_ACTOR_shown = { ACTOR = root }
+			can_be_oath_by_ACTOR = { ACTOR = root }
+		}
+		add = 1
+	}
+	every_vassal = {
 		limit = {
 			is_tactics_dolls_trigger = yes
 			can_be_oath_by_ACTOR_shown = { ACTOR = root }
@@ -42,7 +66,15 @@ to_gf_shiyue_interaction_number = {
 
 to_ba_shiyue_interaction_number = {
 	value = 0
-	every_living_character = {
+	every_courtier_or_guest = {
+		limit = {
+			is_ba_student_trigger = yes
+			can_be_oath_by_ACTOR_shown = { ACTOR = root }
+			can_be_oath_by_ACTOR = { ACTOR = root }
+		}
+		add = 1
+	}
+	every_vassal = {
 		limit = {
 			is_ba_student_trigger = yes
 			can_be_oath_by_ACTOR_shown = { ACTOR = root }
@@ -54,7 +86,15 @@ to_ba_shiyue_interaction_number = {
 
 to_pd_shiyue_interaction_number = {
 	value = 0
-	every_living_character = {
+	every_courtier_or_guest = {
+		limit = {
+			is_uma_musume_trigger = yes
+			can_be_oath_by_ACTOR_shown = { ACTOR = root }
+			can_be_oath_by_ACTOR = { ACTOR = root }
+		}
+		add = 1
+	}
+	every_vassal = {
 		limit = {
 			is_uma_musume_trigger = yes
 			can_be_oath_by_ACTOR_shown = { ACTOR = root }
@@ -66,7 +106,15 @@ to_pd_shiyue_interaction_number = {
 
 to_nikke_shiyue_interaction_number = {
 	value = 0
-	every_living_character = {
+	every_courtier_or_guest = {
+		limit = {
+			nikke_portrait_trigger = yes
+			can_be_oath_by_ACTOR_shown = { ACTOR = root }
+			can_be_oath_by_ACTOR = { ACTOR = root }
+		}
+		add = 1
+	}
+	every_vassal = {
 		limit = {
 			nikke_portrait_trigger = yes
 			can_be_oath_by_ACTOR_shown = { ACTOR = root }
