@@ -2,17 +2,28 @@
 # Extends the Hunjian lib's relation on-actions via the additive on_actions list.
 # 誓约不可解除，因此只需处理“新增”，无需处理移除。
 #
+# 触发时机：
+#   on_set_relation_hunjian   —— 主人建立 hunjian 时触发（新收编 / 批量收编）
+#   on_set_relation_shiyuezhe —— 婚舰建立 shiyuezhe 时触发（也覆盖继承时的关系转移）
+#
 # 作用域（Scopes）：
 #   root = 主人（hunjian 关系持有者/发起方）
 #   scope:target = 目标婚舰
 #
 # 游戏规则：
-#   waifu_hunjian_sibling_opinion（默认启用）—— 婚舰彼此互加好感
-#   waifu_hunjian_master_opinion（默认启用）—— 主人与婚舰互加好感
+#   waifu_hunjian_sibling_opinion（默认启用）—— 婚舰彼此互加好感（挂在 on_set_relation_hunjian）
+#   waifu_hunjian_master_opinion（默认启用）—— 主人与婚舰互加好感（挂在两个 on_action，确保继承后仍生效）
 
 on_set_relation_hunjian = {
 	on_actions = {
 		waifu_connect_hunjian_opinion
+		waifu_connect_hunjian_master_opinion
+	}
+}
+# 继承时婚舰走的是 set_relation_shiyuezhe（发起方=婚舰，target=继承人），
+# 因此“主人↔婚舰”的好感也必须挂到 on_set_relation_shiyuezhe，继承后才会补上。
+on_set_relation_shiyuezhe = {
+	on_actions = {
 		waifu_connect_hunjian_master_opinion
 	}
 }
