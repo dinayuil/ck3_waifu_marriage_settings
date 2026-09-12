@@ -18,3 +18,15 @@
  waifu_call_to_war_interaction_notification:0 "Call to War from Sworn Waifu"
  waifu_call_to_war_accepted:0 "Oath Call: Answered"
  waifu_call_to_war_declined:0 "Oath Call: Declined"
+
+ #
+ # 顶部「当前局势」提醒 / Current Situation important action
+ #
+ waifu_action_can_call_waifu:0 "@alliance_icon! You can call a Sworn Waifu"
+ waifu_action_can_call_waifu_label:0 "@alliance_icon! You can call your sworn waifu [recipient.GetPrimaryTitle.Custom('GetTierIcon')][recipient.GetUINameNoTooltip], #low @soldier_icon![recipient.GetMilitaryStrengthText]#!"
+ waifu_action_can_call_waifu_combined_label:0 "[recipient.GetPrimaryTitle.Custom('GetTierIcon')] [recipient.GetUINameNoTooltip], #low @soldier_icon![recipient.GetMilitaryStrengthText]#!"
+ waifu_action_can_call_waifu_desc:0 "You can call your sworn waifu [recipient.GetUIName] to your [wars|E].\n\n[recipient.GetSheHe|U] has @soldier_icon![recipient.GetMilitaryStrengthText] [soldiers|E] that could help in your [wars|E].$CALL_TO_WAR_HELP$"
+ waifu_action_can_call_waifu_click:0 "#I Click to call Sworn Waifu#!"
+ waifu_action_can_call_waifu_combined_group_label:0 "@alliance_icon! You can call Sworn Waifus"
+ waifu_action_can_call_waifu_combined_group_name:0 "@alliance_icon! You can call Sworn Waifus"
+ waifu_action_can_call_waifu_combined_group_description:0 "You can call your sworn waifus to your [wars|E].$CALL_TO_WAR_HELP$"

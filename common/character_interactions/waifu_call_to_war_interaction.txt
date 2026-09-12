@@ -65,8 +65,15 @@ waifu_call_to_war_interaction = {
 			is_ruler = yes
 			is_playable_character = yes
 			is_imprisoned = no
-			# 不能召唤自己的领主或更高者 / Cannot call your liege or above
-			NOT = { target_is_liege_or_above = scope:actor }
+		}
+
+		scope:actor = {
+			# 允许召唤自己的封臣（这是本 mod 的原版差异点），但不可召唤自己的领主或更高者。
+			# 注意：target_is_liege_or_above = X 在 C 上表示“X 是 C 的领主或更高者”，
+			# 所以这里必须放在 scope:actor 上才能表达“对方不是我的领主”。
+			# Allow calling your own vassals (a deliberate difference from vanilla
+			# call_house_member_to_war_interaction), but not your liege or above.
+			NOT = { target_is_liege_or_above = scope:recipient }
 		}
 	}
 

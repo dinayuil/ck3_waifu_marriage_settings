@@ -46,7 +46,9 @@ CK3 mod，为纸片人角色定制婚姻行为，并兼容婚舰通用库的誓�
 - **零成本**：不消耗威望/虔诚/金币。
 - **拒绝无惩罚**：本交互自身的 `on_decline` **不施加任何惩罚**，因此**两个方向**被拒绝都不会有负面好感或名声损失。这与功能 4 的「拒绝纸片人参战召唤豁免」是**两套互相独立的机制**——那个只撤销**原版**召唤交互的惩罚，本交互不读取它，即使把该规则关闭，本交互依然无惩罚。
 - **反向可选**：可让婚舰（AI）也召唤你参战。
-- 被召唤者必须是**统治者（有兵）**；你自己必须是**战争领袖**（正在打仗）。
+- **可召唤封臣**：即使是你的**封臣**也能被召唤（这是与原版「召唤家族成员」的一个重要差异——原版会排除自己的封臣）。
+- **顶部提醒**：打仗时，顶部「当前局势」列表会出现与「召唤盟友 / 家族成员 / 宗族成员」并列的**「召唤婚舰」**提示，点击即可打开召唤窗口。
+- 被召唤者必须是**统治者（有兵）**；你自己必须是**战争领袖**（正在打仗）；不能召唤自己的**领主或更高者**。
 
 游戏规则「召唤婚舰参战」共四档：
 
@@ -69,7 +71,7 @@ common/
   opinion_modifiers/       婚舰姊妹好感修正
   script_values/           覆盖可誓约数量统计（含封臣、自为主人的纸片人）
   decisions/               覆盖集体誓约决策（遍历玩家领地内的纸片人）
-  important_actions/       覆盖“誓约一位新的{}”顶部圆圈提醒（含封臣、自为主人的纸片人）
+  important_actions/       覆盖“誓约一位新的{}”顶部提醒；新增“召唤婚舰”顶部提醒
   on_action/               玩家死亡时的誓约继承钩子，以及婚舰好感维护钩子
 events/
   waifu_call_to_arms_events.txt   覆盖 call_ally.0101，实现拒绝参战豁免
@@ -94,6 +96,8 @@ localization/
 - 新增 `waifu_call_to_war_interaction`：**全新交互**，通过 `interface = call_ally` + `special_interaction = call_ally_interaction` 复用原版「选择参战战争」界面；在 `on_accept` 里内联执行 `add_attacker` / `add_defender` 参战，**不触发任何 `call_ally.01xx` 事件**，故零覆盖、零冲突
 - 新增 `waifu_call_to_war` 游戏规则（双向 / 仅玩家召唤婚舰 / 仅婚舰召唤玩家 / 关闭）+ `waifu_call_to_war_player_direction_trigger` / `waifu_call_to_war_reverse_direction_trigger` 方向判定触发器
 - 反向（AI 婚舰召唤玩家）：通过 `ai_targets = { ai_recipients = scripted_relations }` 精确命中誓约对象（`hunjian` / `shiyuezhe` 是 scripted relation），并用 `ai_will_do` 按规则开关及「只召唤玩家」过滤
+- 新增 `waifu_action_can_call_waifu`（Important Action）：在顶部「当前局势」列表新增与「召唤盟友 / 家族成员 / 宗族成员」并列的「召唤婚舰」提醒，遍历玩家的 `hunjian` / `shiyuezhe` 关系，并用 `is_character_interaction_valid` + `can_join_war_liege_vassal_check_trigger` 过滤；仅当规则允许「玩家方向」时创建
+- **刻意允许召唤自己的封臣**：原版 `call_house_member_to_war_interaction` 把 `NOT = { target_is_liege_or_above = scope:actor }` 写在 `scope:recipient` 上，等价于「对方不能是我的封臣」，因此排除自己的封臣；本 mod 把它改写到 `scope:actor` 上（`NOT = { target_is_liege_or_above = scope:recipient }`），只排除自己的**领主或更高者**，所以封臣婚舰同样可以召唤
 
 ## 兼容性
 

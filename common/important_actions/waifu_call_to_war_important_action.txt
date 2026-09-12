@@ -1,0 +1,92 @@
+# 召唤婚舰参战 —— 顶部「当前局势」列表提醒（Current Situation important action）
+# Call sworn waifu to war — Current Situation entry
+#
+# 原版只有三类召唤参战的提醒（game/common/important_actions/00_war_actions.txt）：
+#   action_can_call_ally            召唤盟友
+#   action_can_call_house_member    召唤家族成员
+#   action_can_call_dynasty_member  召唤宗族成员
+# 本文件新增第四类：waifu_action_can_call_waifu（召唤婚舰），
+# 当玩家存在「可被召唤参战」的誓约对象时，在顶部当前局势列表里给出提示。
+#
+# 注意 / Notes:
+#   * 与原版三者一致：不写 type（默认 action，进入「当前局势」列表）、不写 icon。
+#   * 仅在游戏规则允许「玩家 → 婚舰」方向时创建。
+#   * 依赖：婚舰通用库（hunjian / shiyuezhe 关系）
+#
+# 作用域 / Scope: root = 玩家角色
+
+waifu_action_can_call_waifu = {
+	priority = 1000
+	combine_into_one = yes
+
+	check_create_action = {
+		# 规则需允许「玩家召唤婚舰」方向 / Rule must allow the player -> waifu direction
+		if = {
+			limit = { waifu_call_to_war_player_direction_trigger = yes }
+
+			# 玩家作为「主人」持有的 hunjian 关系 / hunjian relations the player holds as master
+			every_relation = {
+				type = hunjian
+				save_temporary_scope_as = waifu_ally
+				if = {
+					limit = {
+						root = {
+							is_character_interaction_valid = {
+								recipient = scope:waifu_ally
+								interaction = waifu_call_to_war_interaction
+							}
+							any_character_war = {
+								save_temporary_scope_as = target
+								can_join_war_liege_vassal_check_trigger = {
+									WARRIOR = root
+									JOINER = scope:waifu_ally
+								}
+							}
+						}
+					}
+					try_create_important_action = {
+						important_action_type = waifu_action_can_call_waifu
+						actor = root
+						recipient = scope:waifu_ally
+					}
+				}
+			}
+
+			# 玩家作为「婚舰」持有的 shiyuezhe 关系 / shiyuezhe relations the player holds
+			every_relation = {
+				type = shiyuezhe
+				save_temporary_scope_as = waifu_ally
+				if = {
+					limit = {
+						root = {
+							is_character_interaction_valid = {
+								recipient = scope:waifu_ally
+								interaction = waifu_call_to_war_interaction
+							}
+							any_character_war = {
+								save_temporary_scope_as = target
+								can_join_war_liege_vassal_check_trigger = {
+									WARRIOR = root
+									JOINER = scope:waifu_ally
+								}
+							}
+						}
+					}
+					try_create_important_action = {
+						important_action_type = waifu_action_can_call_waifu
+						actor = root
+						recipient = scope:waifu_ally
+					}
+				}
+			}
+		}
+	}
+
+	effect = {
+		open_interaction_window = {
+			interaction = waifu_call_to_war_interaction
+			actor = scope:actor
+			recipient = scope:recipient
+		}
+	}
+}
