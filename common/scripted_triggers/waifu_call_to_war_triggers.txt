@@ -1,0 +1,33 @@
+# 召唤婚舰参战 —— 游戏规则方向判定
+# Call sworn waifu to war — game rule direction helpers
+#
+# 依赖 / Requires: 婚舰通用库（hunjian / shiyuezhe 关系、has_relation_hunjian_or_shiyuezhe）
+# 游戏规则 / Game rule: waifu_call_to_war（召唤婚舰参战）
+#
+# 说明 / Notes:
+#   玩家方向 = 玩家作为发起者召唤誓约纸片人
+#   反  向   = 誓约纸片人（AI）作为发起者召唤玩家
+
+# 规则允许“玩家 → 婚舰”方向 / Rule allows the player -> waifu direction
+waifu_call_to_war_player_direction_trigger = {
+	OR = {
+		has_game_rule = waifu_call_to_war_enabled
+		has_game_rule = waifu_call_to_war_player_only
+	}
+}
+
+# 规则允许“婚舰 → 玩家”方向（反向）/ Rule allows the waifu -> player (reverse) direction
+waifu_call_to_war_reverse_direction_trigger = {
+	OR = {
+		has_game_rule = waifu_call_to_war_enabled
+		has_game_rule = waifu_call_to_war_reverse_only
+	}
+}
+
+# 规则是否完全启用该交互 / Whether the interaction is enabled at all
+waifu_call_to_war_any_direction_trigger = {
+	OR = {
+		waifu_call_to_war_player_direction_trigger = yes
+		waifu_call_to_war_reverse_direction_trigger = yes
+	}
+}

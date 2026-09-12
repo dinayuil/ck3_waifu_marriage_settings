@@ -54,3 +54,22 @@ waifu_hunjian_master_opinion = {
 	waifu_hunjian_master_opinion_enabled = { }    # 默认启用 / Enabled by default
 	waifu_hunjian_master_opinion_disabled = { }   # 可关闭 / Can be disabled
 }
+
+# 控制“召唤婚舰参战”交互（玩家 ↔ 誓约纸片人）
+# Controls the "call sworn waifu to war" interaction (player <-> sworn 2D character)
+#
+# 选项 / Options:
+#   enabled      —— 双向：玩家可召唤婚舰，婚舰（AI）也可召唤玩家（默认）
+#   player_only  —— 仅玩家召唤婚舰
+#   reverse_only —— 仅婚舰召唤玩家（反向）
+#   disabled     —— 关闭该交互
+waifu_call_to_war = {
+	categories = {
+		waifu
+	}
+	default = waifu_call_to_war_enabled
+	waifu_call_to_war_enabled = { }        # 双向 / Both directions (default)
+	waifu_call_to_war_player_only = { }    # 仅玩家召唤婚舰 / Player calls waifu only
+	waifu_call_to_war_reverse_only = { }   # 仅婚舰召唤玩家 / Waifu calls player only
+	waifu_call_to_war_disabled = { }       # 关闭 / Disabled
+}

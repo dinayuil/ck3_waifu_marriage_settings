@@ -1,0 +1,20 @@
+﻿l_english:
+ #
+ # 召唤婚舰参战 / Call Sworn Waifu to War
+ #
+ rule_waifu_call_to_war:0 "Call Sworn Waifus to War"
+ rule_waifu_call_to_war_desc:0 "Adds a new interaction allowing you to call your sworn waifus (hunjian/shiyuezhe) to fight in your wars, ignoring faith and kinship. Can also allow them to call you. Requires: Hunjian Common Lib."
+ setting_waifu_call_to_war_enabled:0 "Both Directions"
+ setting_waifu_call_to_war_enabled_desc:0 "You can call your sworn waifus to war, and they can call you (default)"
+ setting_waifu_call_to_war_player_only:0 "Player Only"
+ setting_waifu_call_to_war_player_only_desc:0 "Only you can call your sworn waifus to war; they will not call you"
+ setting_waifu_call_to_war_reverse_only:0 "Waifus Only"
+ setting_waifu_call_to_war_reverse_only_desc:0 "Only your sworn waifus can call you to war; you cannot call them"
+ setting_waifu_call_to_war_disabled:0 "Disabled"
+ setting_waifu_call_to_war_disabled_desc:0 "The call-to-war interaction is disabled"
+
+ waifu_call_to_war_interaction:0 "Call Sworn Waifu to War"
+ waifu_call_to_war_interaction_desc:0 "Call on [recipient.GetShortUINameNoTooltip] to fight at your side — bound not by creed or kinship, but by your oath."
+ waifu_call_to_war_interaction_notification:0 "Call to War from Sworn Waifu"
+ waifu_call_to_war_accepted:0 "Oath Call: Answered"
+ waifu_call_to_war_declined:0 "Oath Call: Declined"

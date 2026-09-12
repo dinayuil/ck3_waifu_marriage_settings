@@ -1,0 +1,310 @@
+# 召唤誓约婚舰参战 —— 全新交互（不覆盖任何原版规则）
+# Call sworn waifu to war — brand-new interaction (no vanilla override)
+#
+# 设计 / Design:
+#   * 通过 interface = call_ally + special_interaction = call_ally_interaction 复用原版
+#     “选择参战哪场战争”的界面与窗口数据（同原版 request_contract_assistance_interaction）。
+#   * 在 on_accept 里内联执行参战逻辑（add_attacker / add_defender），
+#     不触发任何 call_ally.01xx 事件，因此与其它 mod 零冲突。
+#   * 誓约关系（hunjian / shiyuezhe）替代原版家族召唤的“同家族 + 同宗教”门槛。
+#
+# 依赖 / Requires: 婚舰通用库（has_relation_hunjian_or_shiyuezhe）
+# 游戏规则 / Game rule: waifu_call_to_war（召唤婚舰参战）
+#   enabled（默认，双向）/ player_only（仅玩家召唤婚舰）/ reverse_only（仅婚舰召唤玩家）/ disabled
+#
+# 作用域 / Scopes:
+#   scope:actor     = 发起召唤的一方（玩家或婚舰）
+#   scope:recipient = 被召唤的一方
+#   scope:target    = 被选择的战争
+
+waifu_call_to_war_interaction = {
+	category = interaction_category_diplomacy
+	interface_priority = 60
+	common_interaction = yes
+
+	# 复用原版召唤参战 UI / Reuse the vanilla call-to-war UI
+	interface = call_ally
+	special_interaction = call_ally_interaction
+
+	popup_on_receive = yes
+	pause_on_receive = yes
+
+	desc = waifu_call_to_war_interaction_desc
+	icon = alliance
+	greeting = positive
+	notification_text = waifu_call_to_war_interaction_notification
+
+	# ── 可见性 / Visibility ────────────────────────────────────────────────
+	is_shown = {
+		scope:recipient != scope:actor
+
+		scope:actor = {
+			# 规则方向：玩家发起需“玩家方向”，AI 发起（反向）需“反向”
+			# Rule direction: player-initiated uses the player direction,
+			# AI-initiated (reverse) uses the reverse direction.
+			trigger_if = {
+				limit = { is_ai = no }
+				waifu_call_to_war_player_direction_trigger = yes
+			}
+			trigger_else = {
+				waifu_call_to_war_reverse_direction_trigger = yes
+				# 反向只针对玩家，避免 AI 之间互召 / Reverse targets players only
+				scope:recipient = { is_ai = no }
+			}
+
+			# 必须是誓约关系 / Must be bound by an oath relation
+			has_relation_hunjian_or_shiyuezhe = { CHARACTER = scope:recipient }
+
+			# 自己必须在打仗且是战争领袖 / Must be at war as the war leader
+			any_character_war = { is_war_leader = scope:actor }
+
+			NOT = { is_at_war_with = scope:recipient }
+		}
+
+		scope:recipient = {
+			is_ruler = yes
+			is_playable_character = yes
+			is_imprisoned = no
+			# 不能召唤自己的领主或更高者 / Cannot call your liege or above
+			NOT = { target_is_liege_or_above = scope:actor }
+		}
+	}
+
+	# ── 合法目标（战争）/ Valid target (the war) ──────────────────────────
+	has_valid_target = {
+		exists = scope:target
+	}
+
+	has_valid_target_showing_failures_only = {
+		scope:target = { is_war_leader = scope:actor }
+		# 不能召入一场她已与参战方交战的战争 / Avoid conflicting war participation
+		joiner_not_already_in_another_war_with_any_target_war_participants_trigger = {
+			WARRIOR = scope:actor
+			JOINER = scope:recipient
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:recipient = { is_imprisoned = no }
+	}
+
+	can_be_picked = {
+		scope:target = {
+			is_war_leader = scope:actor
+			# 不能重复召唤进同一场战争 / Not already in the target war
+			custom_description = {
+				text = join_war_interaction_already_in_target_war
+				NOR = {
+					any_war_attacker = { this = scope:recipient }
+					any_war_defender = { this = scope:recipient }
+				}
+			}
+		}
+		# 保留原版主仆冲突检查 / Keep the vanilla liege-vassal war check
+		can_join_war_liege_vassal_check_trigger = {
+			WARRIOR = scope:actor
+			JOINER = scope:recipient
+		}
+	}
+
+	# ── 接受：直接参战 / Accept: join the war ────────────────────────────
+	# 这就是原版 call_house_member_to_war_interaction_effect 的内联版本
+	# Inline version of the vanilla call_house_member_to_war_interaction_effect
+	on_accept = {
+		scope:target = {
+			hidden_effect = { set_called_to = scope:recipient }
+			if = {
+				limit = { is_attacker = scope:actor }
+				add_attacker = scope:recipient
+			}
+			else = {
+				add_defender = scope:recipient
+			}
+		}
+
+		scope:actor = {
+			# 通知人类玩家：发起方是玩家就通知发起方，否则通知应召的玩家
+			# Notify the human player: the caller if they are human, otherwise the callee
+			if = {
+				limit = { is_ai = no }
+				send_interface_toast = {
+					type = event_toast_effect_neutral
+					title = waifu_call_to_war_accepted
+					left_icon = scope:recipient
+					right_icon = scope:actor
+				}
+			}
+			else = {
+				scope:recipient = {
+					send_interface_toast = {
+						type = event_toast_effect_neutral
+						title = waifu_call_to_war_accepted
+						left_icon = scope:recipient
+						right_icon = scope:actor
+					}
+				}
+			}
+		}
+	}
+
+	# ── 拒绝：无任何惩罚 / Decline: no penalties at all ──────────────────
+	# 本交互的 on_decline 不施加任何惩罚（是“从未施加”，而非“事后撤销”）。
+	# 与 waifu_call_exemption（功能 4）相互独立：那条规则只撤销原版
+	# call_ally / house / dynasty 召唤的惩罚；本交互既不触发 call_ally.01xx，
+	# 也不读取该规则，因此即使关闭那条规则，本交互依然无惩罚。
+	on_decline = {
+		scope:actor = {
+			if = {
+				limit = { is_ai = no }
+				send_interface_toast = {
+					type = event_toast_effect_bad
+					title = waifu_call_to_war_declined
+					left_icon = scope:recipient
+					right_icon = scope:actor
+				}
+			}
+			else = {
+				scope:recipient = {
+					send_interface_toast = {
+						type = event_toast_effect_bad
+						title = waifu_call_to_war_declined
+						left_icon = scope:recipient
+						right_icon = scope:actor
+					}
+				}
+			}
+		}
+	}
+
+	# ── AI 是否答应被召唤 / Whether the AI accepts the call ──────────────
+	ai_accept = {
+		base = 20
+
+		# 好感（本 mod 的 waifu_hunjian_master_opinion +100 会在此生效）
+		# Opinion (the +100 from waifu_hunjian_master_opinion applies here)
+		opinion_modifier = {
+			who = scope:recipient
+			opinion_target = scope:actor
+			multiplier = 1.0
+			desc = AI_OPINION_REASON
+		}
+
+		modifier = {  # 拒绝去打自己的继承人 / Refuse to fight their own heir
+			add = -1000
+			exists = scope:target
+			exists = scope:recipient.player_heir
+			trigger_if = {
+				limit = { scope:target.casus_belli.primary_defender = scope:actor }
+				scope:target.casus_belli.primary_attacker = scope:recipient.player_heir
+			}
+			trigger_else = {
+				scope:target.casus_belli.primary_defender = scope:recipient.player_heir
+			}
+			desc = WONT_FIGHT_HEIR_REASON
+		}
+
+		modifier = {  # 拒绝去打自己的配偶 / Refuse to fight their own spouse
+			add = -1000
+			exists = scope:target
+			scope:recipient = {
+				trigger_if = {
+					limit = { scope:target.casus_belli.primary_defender = scope:actor }
+					any_spouse = { this = scope:target.casus_belli.primary_attacker }
+				}
+				trigger_else = {
+					any_spouse = { this = scope:target.casus_belli.primary_defender }
+				}
+			}
+			desc = WONT_FIGHT_SPOUSE_REASON
+		}
+
+		modifier = {  # 倾向于参加防御战 / Prefers defensive wars
+			add = 50
+			exists = scope:target
+			scope:target.casus_belli.primary_defender = scope:actor
+			desc = DEFENSIVE_WAR_REASON
+		}
+	}
+
+	# ── 反向：AI 婚舰召唤玩家 / Reverse: AI waifu calls the player ────────
+	# hunjian / shiyuezhe 是 scripted relation，因此 scripted_relations 能精确命中玩家。
+	# hunjian / shiyuezhe are scripted relations, so scripted_relations targets the player.
+	ai_targets = {
+		ai_recipients = scripted_relations
+		max = 10
+	}
+
+	ai_frequency_by_tier = {
+		barony = 0
+		county = 24
+		duchy = 12
+		kingdom = 12
+		empire = 12
+		hegemony = 12
+	}
+
+	ai_will_do = {
+		base = 100
+
+		modifier = {  # 反向未开启 → AI 不主动召唤 / Reverse disabled -> never
+			trigger = {
+				NOT = { waifu_call_to_war_reverse_direction_trigger = yes }
+			}
+			factor = 0
+		}
+
+		modifier = {  # 只召唤玩家，避免 AI 互召 / Only call players
+			scope:recipient = { is_ai = yes }
+			factor = 0
+		}
+
+		modifier = {  # 玩家正被别人进攻时，别在进攻战里叫他 / Don't bother an attacked player
+			scope:target.casus_belli.primary_attacker = scope:actor
+			scope:recipient = {
+				is_ai = no
+				any_character_war = { primary_defender = scope:recipient }
+			}
+			factor = 0
+		}
+
+		modifier = {  # 玩家负债就别叫了 / Don't call a player in debt
+			scope:recipient = {
+				is_ai = no
+				gold <= -1
+			}
+			factor = 0
+		}
+
+		modifier = {  # 别召唤玩家去打他自己的继承人 / Avoid player-vs-heir wars
+			exists = scope:recipient.player_heir
+			scope:recipient = { is_ai = no }
+			trigger_if = {
+				limit = { scope:target.casus_belli.primary_defender = scope:actor }
+				scope:target.casus_belli.primary_attacker = scope:recipient.player_heir
+			}
+			trigger_else = {
+				scope:target.casus_belli.primary_defender = scope:recipient.player_heir
+			}
+			factor = 0
+		}
+
+		modifier = {  # 别召唤玩家去打他自己的配偶 / Avoid player-vs-spouse wars
+			scope:recipient = { is_ai = no }
+			scope:recipient = {
+				trigger_if = {
+					limit = { scope:target.casus_belli.primary_defender = scope:actor }
+					any_spouse = { this = scope:target.casus_belli.primary_attacker }
+				}
+				trigger_else = {
+					any_spouse = { this = scope:target.casus_belli.primary_defender }
+				}
+			}
+			factor = 0
+		}
+
+		modifier = {  # 战争刚开打时别急着叫人 / Don't call into a brand-new war
+			scope:target = { war_days < 30 }
+			factor = 0
+		}
+	}
+}

@@ -1,0 +1,20 @@
+﻿l_simp_chinese:
+ #
+ # 召唤婚舰参战 / Call Sworn Waifu to War
+ #
+ rule_waifu_call_to_war:0 "召唤婚舰参战"
+ rule_waifu_call_to_war_desc:0 "新增一个交互：你可以召唤誓约的婚舰/纸片人（hunjian/shiyuezhe）参加你的战争，无视信仰与血缘；也可反向允许她们召唤你。需要前置模组：婚舰通用库。"
+ setting_waifu_call_to_war_enabled:0 "双向"
+ setting_waifu_call_to_war_enabled_desc:0 "你可以召唤婚舰参战，婚舰也可以召唤你（默认）"
+ setting_waifu_call_to_war_player_only:0 "仅玩家召唤婚舰"
+ setting_waifu_call_to_war_player_only_desc:0 "只有你可以召唤婚舰参战，婚舰不会召唤你"
+ setting_waifu_call_to_war_reverse_only:0 "仅婚舰召唤玩家"
+ setting_waifu_call_to_war_reverse_only_desc:0 "只有婚舰可以召唤你参战，你不能召唤婚舰"
+ setting_waifu_call_to_war_disabled:0 "关闭"
+ setting_waifu_call_to_war_disabled_desc:0 "关闭召唤婚舰参战交互"
+
+ waifu_call_to_war_interaction:0 "召唤婚舰参战"
+ waifu_call_to_war_interaction_desc:0 "召唤[recipient.GetShortUINameNoTooltip]为你而战——让你们并肩的，是誓约，而非信仰或血缘。"
+ waifu_call_to_war_interaction_notification:0 "婚舰召唤参战"
+ waifu_call_to_war_accepted:0 "誓约召唤：已应召参战"
+ waifu_call_to_war_declined:0 "誓约召唤：拒绝应召"
