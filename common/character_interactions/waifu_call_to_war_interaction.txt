@@ -93,6 +93,29 @@ waifu_call_to_war_interaction = {
 
 	is_valid_showing_failures_only = {
 		scope:recipient = { is_imprisoned = no }
+
+		# 必须还存在「你是战争领袖、而她尚未参战」的战争。
+		# 与 call_house_member_to_war_interaction 的 is_already_in_all_wars 检查一致。
+		# 关键：顶部「召唤婚舰」提醒（Important Action）依赖
+		# is_character_interaction_valid 来评估本段，所以加了它之后，
+		# 她加入全部可参战战争时提醒会自动消失（与盟友/家族/宗族召唤行为一致）。
+		# Must still exist a war where you are a primary party and she is neither
+		# already a participant nor already called into it.
+		custom_description = {
+			text = "is_already_in_all_wars"
+			scope:actor = {
+				any_character_war = {
+					NOR = {
+						is_participant = scope:recipient
+						was_called = scope:recipient
+					}
+					OR = {
+						primary_attacker = scope:actor
+						primary_defender = scope:actor
+					}
+				}
+			}
+		}
 	}
 
 	can_be_picked = {

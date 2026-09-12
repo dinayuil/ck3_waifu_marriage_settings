@@ -41,6 +41,11 @@ waifu_action_can_call_waifu = {
 									WARRIOR = root
 									JOINER = scope:waifu_ally
 								}
+								# 她尚未加入这场战争 / Not already a participant in this war
+								NOR = {
+									any_war_attacker = { this = scope:waifu_ally }
+									any_war_defender = { this = scope:waifu_ally }
+								}
 							}
 						}
 					}
@@ -68,6 +73,11 @@ waifu_action_can_call_waifu = {
 								can_join_war_liege_vassal_check_trigger = {
 									WARRIOR = root
 									JOINER = scope:waifu_ally
+								}
+								# 她尚未加入这场战争 / Not already a participant in this war
+								NOR = {
+									any_war_attacker = { this = scope:waifu_ally }
+									any_war_defender = { this = scope:waifu_ally }
 								}
 							}
 						}
